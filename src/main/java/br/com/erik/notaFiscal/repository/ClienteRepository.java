@@ -7,5 +7,4 @@ import br.com.erik.notaFiscal.modelo.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
 	Cliente findByNome(Cliente nome);
-
 }

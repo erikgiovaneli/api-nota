@@ -19,42 +19,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.erik.notaFiscal.modelo.Nota;
-import br.com.erik.notaFiscal.repository.NotaRepository;
+import br.com.erik.notaFiscal.modelo.Produto;
+import br.com.erik.notaFiscal.repository.ProdutoRepository;
 
 @RestController
-@RequestMapping("/Nota")
-public class NotasController {
+@RequestMapping("/Produto")
+public class ProdutoController {
 	
 	@Autowired
-	private NotaRepository notaRepository;
+	private ProdutoRepository produtoRepository;
 	
 	@GetMapping
-	public List<Nota> lista(){
-		List<Nota> notas = notaRepository.findAll();
-		return notas;
+	public List<Produto> lista(){
+		List<Produto> produtos = produtoRepository.findAll();
+		return produtos;
 	}
 	
 	@PostMapping
-	public ResponseEntity<Nota> cadastrar(@RequestBody Nota nota, UriComponentsBuilder uriBuilder){
-		nota = notaRepository.save(nota);
-		URI uri = uriBuilder.path("/Notas/{id}").buildAndExpand(nota.getId()).toUri();
-		return ResponseEntity.created(uri).body(nota);
+	public ResponseEntity<Produto> cadastrar(@RequestBody Produto produto, UriComponentsBuilder uriBuilder){
+		produto = produtoRepository.save(produto);
+		URI uri = uriBuilder.path("/Notas/{id}").buildAndExpand(produto.getId()).toUri();
+		return ResponseEntity.created(uri).body(produto);
 	}
 	
 	@PutMapping
-	public Nota atualizaNotao(@RequestBody Nota nota) {
-		return notaRepository.save(nota);
+	public Produto atualizaProduto(@RequestBody Produto produto) {
+		return produtoRepository.save(produto);
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> deletaNota(@PathVariable Long id) {
-		Optional<Nota> nota = notaRepository.findById(id);
-		if(nota.isPresent()) {
-			notaRepository.deleteById(id);
+	public ResponseEntity<?> deletaProduto(@PathVariable Long id) {
+		Optional<Produto> produto = produtoRepository.findById(id);
+		if(produto.isPresent()) {
+			produtoRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();
 	}
 }
+
