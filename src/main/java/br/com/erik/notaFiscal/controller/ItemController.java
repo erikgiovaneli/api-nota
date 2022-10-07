@@ -19,42 +19,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.erik.notaFiscal.modelo.Nota;
-import br.com.erik.notaFiscal.repository.NotaRepository;
+import br.com.erik.notaFiscal.modelo.Item;
+import br.com.erik.notaFiscal.repository.ItemRepository;
 
 @RestController
-@RequestMapping("/Nota")
-public class NotasController {
+@RequestMapping("/Item")
+public class ItemController {
 	
 	@Autowired
-	private NotaRepository notaRepository;
+	private ItemRepository itemsRepository;
 	
 	@GetMapping
-	public List<Nota> lista(){
-		List<Nota> notas = notaRepository.findAll();
-		return notas;
+	public List<Item> lista(){
+		List<Item> items = itemsRepository.findAll();
+		return items;
 	}
 	
 	@PostMapping
-	public ResponseEntity<Nota> cadastrar(@RequestBody Nota nota, UriComponentsBuilder uriBuilder){
-		nota = notaRepository.save(nota);
-		URI uri = uriBuilder.path("/Notas/{id}").buildAndExpand(nota.getId()).toUri();
-		return ResponseEntity.created(uri).body(nota);
+	public ResponseEntity<Item> cadastrar(@RequestBody Item item, UriComponentsBuilder uriBuilder){
+		item = itemsRepository.save(item);
+		URI uri = uriBuilder.path("/Item/{id}").buildAndExpand(item.getId()).toUri();
+		return ResponseEntity.created(uri).body(item);
 	}
 	
 	@PutMapping
-	public Nota atualizaNotao(@RequestBody Nota nota) {
-		return notaRepository.save(nota);
+	public Item atualizaProduto(@RequestBody Item item) {
+		return itemsRepository.save(item);
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> deletaNota(@PathVariable Long id) {
-		Optional<Nota> nota = notaRepository.findById(id);
-		if(nota.isPresent()) {
-			notaRepository.deleteById(id);
+	public ResponseEntity<?> deletaProduto(@PathVariable Long id) {
+		Optional<Item> item = itemsRepository.findById(id);
+		if(item.isPresent()) {
+			itemsRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();
 	}
 }
+

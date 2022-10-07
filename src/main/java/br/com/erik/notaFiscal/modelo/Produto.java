@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="TB_PRODUTO")
@@ -15,8 +17,11 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	@NotNull @NotEmpty
 	private String cod;
+	@NotNull @NotEmpty
 	private String descricao;
+	@NotNull @NotEmpty
 	private BigDecimal valor;
 	
 	
